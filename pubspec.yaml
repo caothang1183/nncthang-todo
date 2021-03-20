@@ -29,12 +29,16 @@ dependencies:
   hive: ^2.0.0
   dio: ^3.0.10
   cupertino_icons: ^1.0.2
+  json_annotation:
+  intl:
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   hive_generator: ^1.0.0
+  json_serializable: 3.5.1
   build_runner: ^1.5.2
+
 flutter:
 
   uses-material-design: true

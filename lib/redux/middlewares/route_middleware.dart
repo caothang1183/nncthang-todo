@@ -1,5 +1,5 @@
+import 'package:nncthang_todoapp/app.dart';
 import 'package:nncthang_todoapp/common/constants/routes.dart';
-import 'package:nncthang_todoapp/main.dart';
 import 'package:nncthang_todoapp/redux/actions/route_actions.dart';
 import 'package:nncthang_todoapp/redux/states/app_state.dart';
 import 'package:redux/redux.dart';
