@@ -18,7 +18,15 @@ class TaskItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 10.0).copyWith(left: 20.0),
+      padding: EdgeInsets.symmetric(vertical: 12.0),
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(
+            color: AppColors.greyNavigator,
+            width: 0.5,
+          ),
+        ),
+      ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -51,12 +59,23 @@ class TaskItem extends StatelessWidget {
               ],
             ),
           ),
-          Text(
-            DateTimeUtils.formatDateTime(task.createdDate, DateFormat.HOUR24_MINUTE),
-            style: TextStyle(
-              fontSize: Dimens.mediumFontSize,
-              color: AppColors.greyNavigator,
-            ),
+          Column(
+            children: [
+              Text(
+                DateTimeUtils.formatDateTime(task.deadline, DateFormat.ABBR_WEEKDAY),
+                style: TextStyle(
+                  fontSize: Dimens.mediumFontSize,
+                  color: AppColors.darkGrey.withOpacity(0.6),
+                ),
+              ),
+              Text(
+                DateTimeUtils.formatDateTime(task.deadline, DateFormat.HOUR24_MINUTE),
+                style: TextStyle(
+                  fontSize: Dimens.mediumFontSize,
+                  color: AppColors.greyNavigator,
+                ),
+              ),
+            ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,

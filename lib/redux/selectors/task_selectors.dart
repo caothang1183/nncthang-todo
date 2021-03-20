@@ -3,19 +3,19 @@ import 'package:nncthang_todoapp/redux/states/app_state.dart';
 
 List<Task> allTaskSelector(AppState state) {
   List<Task> list = state.taskState.taskResponse.tasks.toList();
-  list.sort((a, b) => a.createdDate.compareTo(b.createdDate));
+  list.sort((a, b) => a.deadline.compareTo(b.deadline));
   return list;
 }
 
 List<Task> tasksCompleteSelector(AppState state) {
   List<Task> list = allTaskSelector(state).where((Task task) => task.complete == true).toList();
-  list.sort((a, b) => a.createdDate.compareTo(b.createdDate));
+  list.sort((a, b) => a.deadline.compareTo(b.deadline));
   return list;
 }
 
 List<Task> tasksIncompleteSelector(AppState state) {
   List<Task> list = allTaskSelector(state).where((Task task) => task.complete == false).toList();
-  list.sort((a, b) => a.createdDate.compareTo(b.createdDate));
+  list.sort((a, b) => a.deadline.compareTo(b.deadline));
   return list;
 }
 

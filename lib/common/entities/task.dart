@@ -20,8 +20,11 @@ class Task {
   @HiveField(3)
   final bool complete;
 
-  @JsonKey(name: 'created_date')
   @HiveField(4)
+  final String deadline;
+
+  @JsonKey(name: 'created_date')
+  @HiveField(5)
   final String createdDate;
 
   Task({
@@ -29,6 +32,7 @@ class Task {
     this.task = "",
     this.note = "",
     this.complete = false,
+    this.deadline = "",
     this.createdDate = "",
   });
 
@@ -37,6 +41,7 @@ class Task {
     String task,
     String note,
     bool complete,
+    String deadline,
     String createdDate,
   }) {
     return Task(
@@ -44,6 +49,7 @@ class Task {
       task: task ?? this.task,
       note: note ?? this.note,
       complete: complete ?? this.complete,
+      deadline: deadline ?? this.deadline,
       createdDate: createdDate ?? this.createdDate,
     );
   }

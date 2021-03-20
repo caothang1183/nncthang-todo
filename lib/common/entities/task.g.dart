@@ -21,14 +21,15 @@ class TaskAdapter extends TypeAdapter<Task> {
       task: fields[1] as String,
       note: fields[2] as String,
       complete: fields[3] as bool,
-      createdDate: fields[4] as String,
+      deadline: fields[4] as String,
+      createdDate: fields[5] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, Task obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -38,6 +39,8 @@ class TaskAdapter extends TypeAdapter<Task> {
       ..writeByte(3)
       ..write(obj.complete)
       ..writeByte(4)
+      ..write(obj.deadline)
+      ..writeByte(5)
       ..write(obj.createdDate);
   }
 
@@ -62,6 +65,7 @@ Task _$TaskFromJson(Map<String, dynamic> json) {
     task: json['task'] as String,
     note: json['note'] as String,
     complete: json['complete'] as bool,
+    deadline: json['deadline'] as String,
     createdDate: json['created_date'] as String,
   );
 }
@@ -71,5 +75,6 @@ Map<String, dynamic> _$TaskToJson(Task instance) => <String, dynamic>{
       'task': instance.task,
       'note': instance.note,
       'complete': instance.complete,
+      'deadline': instance.deadline,
       'created_date': instance.createdDate,
     };
