@@ -4,6 +4,7 @@ import 'package:nncthang_todoapp/common/constants/dimens.dart';
 class CustomProgressIndicator extends StatelessWidget {
   final double size;
   final double textSize;
+  final Color indicatorColor;
   final String message;
 
   const CustomProgressIndicator({
@@ -11,6 +12,7 @@ class CustomProgressIndicator extends StatelessWidget {
     this.size = 14,
     this.textSize = Dimens.mediumFontSize,
     this.message = "",
+    this.indicatorColor = Colors.orange,
   }) : super(key: key);
 
   @override
@@ -19,7 +21,9 @@ class CustomProgressIndicator extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         SizedBox(
-          child: CircularProgressIndicator(),
+          child: CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(indicatorColor),
+          ),
           height: size,
           width: size,
         ),

@@ -1,4 +1,5 @@
 import 'package:nncthang_todoapp/common/entities/task.dart';
+import 'package:nncthang_todoapp/redux/actions/authentication_actions.dart';
 import 'package:nncthang_todoapp/redux/actions/task_actions.dart';
 import 'package:nncthang_todoapp/redux/states/task_state.dart';
 import 'package:redux/redux.dart';
@@ -12,6 +13,8 @@ final taskReducer = combineReducers<TaskState>([
   TypedReducer<TaskState, UpdatingTaskStatusAction>(_updatingTaskStatus),
   TypedReducer<TaskState, UpdateTaskStatusSuccessAction>(_updateTaskStatusSuccess),
   TypedReducer<TaskState, UpdateTaskStatusFailureAction>(_updateTaskStatusFailure),
+
+  TypedReducer<TaskState, LogoutAccountAction>(_logout),
 ]);
 
 TaskState _loadingTasks(TaskState state, LoadingTasksAction action) {
@@ -70,4 +73,8 @@ TaskState _updateTaskStatusFailure(TaskState state, UpdateTaskStatusFailureActio
     isLoading: false,
     error: action.error,
   );
+}
+
+TaskState _logout(TaskState state, LogoutAccountAction action) {
+  return TaskState();
 }

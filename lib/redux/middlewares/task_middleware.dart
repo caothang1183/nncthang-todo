@@ -6,6 +6,8 @@ import 'package:nncthang_todoapp/data/models/tasks_data.dart';
 import 'package:nncthang_todoapp/data/task_data_manager.dart';
 import 'package:nncthang_todoapp/network/api_provider.dart';
 import 'package:nncthang_todoapp/network/task_repository.dart';
+import 'package:nncthang_todoapp/redux/actions/authentication_actions.dart';
+import 'package:nncthang_todoapp/redux/actions/route_actions.dart';
 import 'package:nncthang_todoapp/redux/actions/task_actions.dart';
 import 'package:nncthang_todoapp/redux/selectors/task_selectors.dart';
 import 'package:nncthang_todoapp/redux/states/app_state.dart';
@@ -17,6 +19,7 @@ List<Middleware<AppState>> taskMiddleware([
   return [
     TypedMiddleware<AppState, LoadTasksAction>(_loadTasks(repository)),
     TypedMiddleware<AppState, UpdateTaskStatusAction>(_updateTaskStatus(repository)),
+    TypedMiddleware<AppState, LogoutAccountAction>(_logout()),
   ];
 }
 
@@ -45,9 +48,15 @@ Middleware<AppState> _updateTaskStatus(TaskRepository repository) {
       Task taskUpdated = Task.fromJson(response.data['data']);
       int statusCode = response.statusCode;
       store.dispatch(UpdateTaskStatusSuccessAction(taskUpdated: taskUpdated, statusCode: statusCode));
-    }).catchError((e) => store.dispatch(UpdateTaskStatusFailureAction(
-          error: e.toString())));
+    }).catchError((e) => store.dispatch(UpdateTaskStatusFailureAction(error: e.toString())));
 
+    next(action);
+  };
+}
+
+Middleware<AppState> _logout() {
+  return (Store<AppState> store, action, NextDispatcher next) {
+    Future.delayed(Duration(milliseconds: 300)).then((value) => store.dispatch(OpenLoginPageAction()));
     next(action);
   };
 }

@@ -7,6 +7,7 @@ import 'package:nncthang_todoapp/presentation/pages/home/fragments/complete_task
 import 'package:nncthang_todoapp/presentation/pages/home/fragments/incomplete_tasks.dart';
 import 'package:nncthang_todoapp/presentation/widgets/bottom_navigator.dart';
 import 'package:nncthang_todoapp/redux/actions/app_actions.dart';
+import 'package:nncthang_todoapp/redux/actions/authentication_actions.dart';
 import 'package:nncthang_todoapp/redux/actions/route_actions.dart';
 import 'package:nncthang_todoapp/redux/actions/task_actions.dart';
 import 'package:nncthang_todoapp/redux/selectors/app_state_selector.dart';
@@ -42,6 +43,9 @@ class _HomePageState extends State<HomePage> {
             key: _scaffoldKey,
             appBar: AppBar(
               title: Text(Strings.appBar + " - ${titles[vm.currentIndex]}"),
+              actions: [
+                MaterialButton(onPressed: vm.logout, child: Text("Log out"),)
+              ],
             ),
             body: pages.elementAt(vm.currentIndex),
             bottomNavigationBar: BottomTabBar(
@@ -61,11 +65,13 @@ class _ViewModel {
   final int currentIndex;
   final Function onBottomTap;
   final Function openAddTask;
+  final Function logout;
 
   _ViewModel({
     this.currentIndex,
     this.onBottomTap,
     this.openAddTask,
+    this.logout,
   });
 
   static _ViewModel fromStore(Store<AppState> store) {
@@ -78,6 +84,9 @@ class _ViewModel {
       ),
       openAddTask: () {
         store.dispatch(OpenAddTaskPageAction());
+      },
+      logout: () {
+        store.dispatch(LogoutAccountAction());
       },
     );
   }

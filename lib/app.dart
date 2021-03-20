@@ -6,9 +6,11 @@ import 'package:nncthang_todoapp/common/constants/colors.dart';
 import 'package:nncthang_todoapp/common/constants/routes.dart';
 import 'package:nncthang_todoapp/common/constants/strings.dart';
 import 'package:nncthang_todoapp/network/dio_manager.dart';
+import 'package:nncthang_todoapp/redux/middlewares/auth_middleware.dart';
 import 'package:nncthang_todoapp/redux/middlewares/database_middleware.dart';
 import 'package:nncthang_todoapp/redux/middlewares/log_middleware.dart';
 import 'package:nncthang_todoapp/redux/middlewares/route_middleware.dart';
+import 'package:nncthang_todoapp/redux/middlewares/shared_prefs_middleware.dart';
 import 'package:nncthang_todoapp/redux/middlewares/task_middleware.dart';
 import 'package:nncthang_todoapp/redux/reducers/app_reducer.dart';
 import 'package:nncthang_todoapp/redux/states/app_state.dart';
@@ -26,7 +28,9 @@ class _AppState extends State<App> with WidgetsBindingObserver {
     ...logMiddleware(),
     ...routerMiddleware(),
     ...taskMiddleware(),
+    ...authMiddleware(),
     ...databaseMiddleware(),
+    ...sharedPrefsMiddleware(),
   ]);
 
   Future<void> _initializeAppConfigs() async {
@@ -50,10 +54,10 @@ class _AppState extends State<App> with WidgetsBindingObserver {
     final todoAppTheme = ThemeData(
       fontFamily: Strings.defaultFontFamily,
       textTheme: Theme.of(context).textTheme.apply(
-        bodyColor: AppColors.darkGrey,
-        displayColor: AppColors.darkGrey,
-        fontFamily: Strings.defaultFontFamily,
-      ),
+            bodyColor: AppColors.darkGrey,
+            displayColor: AppColors.darkGrey,
+            fontFamily: Strings.defaultFontFamily,
+          ),
       textSelectionTheme: TextSelectionThemeData(
         cursorColor: AppColors.darkGrey,
       ),
@@ -64,8 +68,8 @@ class _AppState extends State<App> with WidgetsBindingObserver {
         ),
       ),
       primaryTextTheme: Theme.of(context).primaryTextTheme.apply(
-        bodyColor: AppColors.darkGrey,
-      ),
+            bodyColor: AppColors.darkGrey,
+          ),
     );
 
     SystemChrome.setPreferredOrientations([
@@ -96,16 +100,13 @@ class _AppState extends State<App> with WidgetsBindingObserver {
                         primarySwatch: Colors.orange,
                       ),
                       onGenerateRoute: (settings) => generateRoute(settings),
-                      initialRoute: AppRoutes.homeRoute,
-                    )
-                );
+                      initialRoute: AppRoutes.loginRoute,
+                    ));
                 break;
               default:
                 return Center(child: CircularProgressIndicator());
             }
           },
-        )
-    );
+        ));
   }
 }
-
