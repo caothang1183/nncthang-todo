@@ -1,8 +1,5 @@
-import 'package:nncthang_todoapp/common/entities/task.dart';
 import 'package:nncthang_todoapp/redux/actions/authentication_actions.dart';
-import 'package:nncthang_todoapp/redux/actions/task_actions.dart';
 import 'package:nncthang_todoapp/redux/states/auth_state.dart';
-import 'package:nncthang_todoapp/redux/states/task_state.dart';
 import 'package:redux/redux.dart';
 
 final authReducer = combineReducers<AuthState>([
@@ -32,4 +29,3 @@ AuthState _signingInFailureAccount(AuthState state, SignInAccountFailureAction a
 AuthState _logout(AuthState state, LogoutAccountAction action) {
   return AuthState();
 }
-

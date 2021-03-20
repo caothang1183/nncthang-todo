@@ -5,6 +5,7 @@ import 'package:nncthang_todoapp/common/utils/datetime_utils.dart';
 import 'package:nncthang_todoapp/data/models/tasks_data.dart';
 import 'package:nncthang_todoapp/data/task_data_manager.dart';
 import 'package:nncthang_todoapp/network/api_provider.dart';
+import 'package:nncthang_todoapp/network/models/task_criteria.dart';
 import 'package:nncthang_todoapp/network/task_repository.dart';
 import 'package:nncthang_todoapp/redux/actions/authentication_actions.dart';
 import 'package:nncthang_todoapp/redux/actions/route_actions.dart';
@@ -20,6 +21,8 @@ List<Middleware<AppState>> taskMiddleware([
     TypedMiddleware<AppState, LoadTasksAction>(_loadTasks(repository)),
     TypedMiddleware<AppState, UpdateTaskStatusAction>(_updateTaskStatus(repository)),
     TypedMiddleware<AppState, DeleteTaskAction>(_deleteTask(repository)),
+    TypedMiddleware<AppState, AddTaskAction>(_addTask(repository)),
+    TypedMiddleware<AppState, EditTaskAction>(_editTask(repository)),
     TypedMiddleware<AppState, LogoutAccountAction>(_logout()),
   ];
 }
@@ -37,6 +40,54 @@ Middleware<AppState> _loadTasks(TaskRepository repository) {
     } else {
       store.dispatch(LoadTasksSuccessAction(taskResponse: data.taskResponse));
     }
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _addTask(TaskRepository repository) {
+  return (Store<AppState> store, action, NextDispatcher next) {
+    store.dispatch(AddingTaskAction());
+    TaskCriteria criteria = TaskCriteria(
+      task: action.task.task,
+      note: action.task.note,
+      deadline: action.task.deadline,
+      complete: action.task.complete,
+    );
+    repository.addTask<Response>(criteria).then((response) {
+      if(response.statusCode == 200){
+        Task taskAdded = Task.fromJson(response.data['data']);
+        store.dispatch(AddTaskSuccessAction(task: taskAdded));
+        store.dispatch(PopPageAction());
+      } else {
+        store.dispatch(AddTaskFailureAction(error: "Something went wrong!"));
+      }
+    }).catchError((e) =>store.dispatch(AddTaskFailureAction(error: e.toString())));
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _editTask(TaskRepository repository) {
+  return (Store<AppState> store, action, NextDispatcher next) {
+    store.dispatch(EditingTaskAction());
+    TaskCriteria criteria = TaskCriteria(
+      id: action.task.id,
+      task: action.task.task,
+      note: action.task.note,
+      deadline: action.task.deadline,
+      complete: action.task.complete,
+    );
+    repository.updateTask<Response>(criteria).then((response) {
+      if(response.statusCode == 200) {
+        Task taskUpdated = Task.fromJson(response.data['data']);
+        store.dispatch(EditTaskSuccessAction(task: taskUpdated));
+        store.dispatch(PopPageAction());
+      } else{
+        store.dispatch(EditTaskFailureAction(error: "Something went wrong!"));
+      }
+
+    }).catchError((e) => store.dispatch(EditTaskFailureAction(error: e.toString())));
 
     next(action);
   };

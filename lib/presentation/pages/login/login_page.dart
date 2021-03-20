@@ -3,12 +3,10 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:nncthang_todoapp/common/constants/colors.dart';
 import 'package:nncthang_todoapp/common/constants/dimens.dart';
 import 'package:nncthang_todoapp/common/constants/strings.dart';
-import 'package:nncthang_todoapp/presentation/widgets/custom_progress_indicator.dart';
 import 'package:nncthang_todoapp/presentation/widgets/large_raise_button.dart';
 import 'package:nncthang_todoapp/presentation/widgets/text_form_field.dart';
 import 'package:nncthang_todoapp/redux/actions/authentication_actions.dart';
 import 'package:nncthang_todoapp/redux/actions/shared_prefs_action.dart';
-import 'package:nncthang_todoapp/redux/selectors/app_state_selector.dart';
 import 'package:nncthang_todoapp/redux/selectors/authen_selectors.dart';
 import 'package:nncthang_todoapp/redux/states/app_state.dart';
 import 'package:redux/redux.dart';
@@ -20,6 +18,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final _formKey = GlobalKey<FormState>();
   var _usernameController = TextEditingController();
   var _passwordController = TextEditingController();
   final FocusNode _usernameFocus = FocusNode();
@@ -63,78 +62,84 @@ class _LoginPageState extends State<LoginPage> {
                   left: Dimens.defaultPadding,
                   right: Dimens.defaultPadding,
                 ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(height: Dimens.appHeight(context) / 8),
-                    Text(
-                      "Todo App",
-                      style: TextStyle(
-                        color: AppColors.darkGrey,
-                        fontStyle: FontStyle.italic,
-                        fontSize: Dimens.largeFontSize * 2,
-                      ),
-                    ),
-                    SizedBox(height: 50.0),
-                    TextFormFieldWidget(
-                      label: 'Username',
-                      controller: _usernameController,
-                      focusNode: _usernameFocus,
-                      onSubmitted: (term) {
-                        _fieldFocusChange(_usernameFocus, _passwordFocus);
-                      },
-                    ),
-                    SizedBox(height: Dimens.defaultPadding),
-                    TextFormFieldWidget(
-                      label: "Password",
-                      controller: _passwordController,
-                      textInputAction: TextInputAction.done,
-                      focusNode: _passwordFocus,
-                      isPassword: true,
-                      onSubmitted: (value) {
-                        _passwordFocus.unfocus();
-                      },
-                    ),
-                    Container(
-                      alignment: Alignment.centerRight,
-                      padding: EdgeInsets.only(
-                        right: 10,
-                        bottom: Dimens.defaultPadding,
-                        top: Dimens.defaultPadding,
-                      ),
-                      child: Text(
-                        Strings.forgotPassword,
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(height: Dimens.appHeight(context) / 8),
+                      Text(
+                        "Todo App",
                         style: TextStyle(
-                          decorationThickness: 1.0,
                           color: AppColors.darkGrey,
                           fontStyle: FontStyle.italic,
-                          decoration: TextDecoration.underline,
+                          fontSize: Dimens.largeFontSize * 2,
                         ),
                       ),
-                    ),
-                    SizedBox(height: Dimens.defaultPadding),
-                    Column(
-                      children: [
-                        LargeRaiseButtonWidget(
-                          loading: vm.signingIn,
-                          label: Strings.btnSignIn,
-                          labelColor: Colors.white,
-                          backgroundColor: Colors.orange,
-                          onTap: () {
-                            vm.signInAccount(_usernameController.text, _passwordController.text);
-                          },
+                      SizedBox(height: 50.0),
+                      TextFormFieldWidget(
+                        label: 'Username',
+                        controller: _usernameController,
+                        focusNode: _usernameFocus,
+                        onSubmitted: (term) {
+                          _fieldFocusChange(_usernameFocus, _passwordFocus);
+                        },
+                      ),
+                      SizedBox(height: Dimens.defaultPadding),
+                      TextFormFieldWidget(
+                        label: "Password",
+                        controller: _passwordController,
+                        textInputAction: TextInputAction.done,
+                        focusNode: _passwordFocus,
+                        isPassword: true,
+                        onSubmitted: (value) {
+                          _passwordFocus.unfocus();
+                        },
+                      ),
+                      Container(
+                        alignment: Alignment.centerRight,
+                        padding: EdgeInsets.only(
+                          right: 10,
+                          bottom: Dimens.defaultPadding,
+                          top: Dimens.defaultPadding,
                         ),
-                        vm.error != ""
-                            ? Text(vm.error, style: TextStyle(color: Colors.redAccent))
-                            : SizedBox.shrink(),
-                      ],
-                    )
-                  ],
+                        child: Text(
+                          Strings.forgotPassword,
+                          style: TextStyle(
+                            decorationThickness: 1.0,
+                            color: AppColors.darkGrey,
+                            fontStyle: FontStyle.italic,
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: Dimens.defaultPadding),
+                      Column(
+                        children: [
+                          LargeRaiseButtonWidget(
+                            loading: vm.signingIn,
+                            label: Strings.btnSignIn,
+                            labelColor: Colors.white,
+                            backgroundColor: Colors.orange,
+                            onTap: () {
+                              if (_formKey.currentState.validate()) {
+                                // If the form is valid, display a Snackbar.
+                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Processing')));
+                                vm.signInAccount(_usernameController.text, _passwordController.text);
+                              }
+                            },
+                          ),
+                          vm.error != ""
+                              ? Text(vm.error, style: TextStyle(color: Colors.redAccent))
+                              : SizedBox.shrink(),
+                        ],
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
-
           );
         },
       ),

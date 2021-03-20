@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:nncthang_todoapp/common/entities/task_response.dart';
 import 'package:nncthang_todoapp/network/dio_manager.dart';
 import 'package:nncthang_todoapp/network/models/auth_criteria.dart';
+import 'package:nncthang_todoapp/network/models/task_criteria.dart';
 
 class ApiProvider {
   const ApiProvider();
@@ -19,7 +20,29 @@ class ApiProvider {
     return DioManager.dio.get('${host()}/tasks').then((resp) => TaskResponse.fromJson(resp.data) as T);
   }
 
-  updateTasks<T>(String id) {
+  addTask<T>(TaskCriteria criteria) {
+    return DioManager.dio
+        .post('${host()}/tasks',
+            data: jsonEncode({
+              'task': criteria.task,
+              'note': criteria.note,
+              'complete': criteria.complete,
+              'deadline': criteria.deadline
+            }))
+        .then((resp) => resp as T);
+  }
+
+  updateTask<T>(TaskCriteria criteria) {
+    return DioManager.dio.post('${host()}/tasks/${criteria.id}',
+        data: jsonEncode({
+          'task': criteria.task,
+          'note': criteria.note,
+          'complete': criteria.complete,
+          'deadline': criteria.deadline
+        })).then((resp) => resp as T);
+  }
+
+  updateTaskStatus<T>(String id) {
     return DioManager.dio.post('${host()}/tasks/updateStatus/$id').then((resp) => resp as T);
   }
 

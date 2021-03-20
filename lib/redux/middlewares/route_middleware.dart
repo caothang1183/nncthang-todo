@@ -7,10 +7,22 @@ import 'package:redux/redux.dart';
 
 List<Middleware<AppState>> routerMiddleware() {
   return [
+    TypedMiddleware<AppState, PopPageAction>(_popPage),
+    TypedMiddleware<AppState, OpenEditTaskPageAction>(_openEditTaskPage),
     TypedMiddleware<AppState, OpenAddTaskPageAction>(_openAddTaskPage),
     TypedMiddleware<AppState, OpenHomePageAction>(_openHomePage),
     TypedMiddleware<AppState, OpenLoginPageAction>(_openLoginPage),
   ];
+}
+
+_popPage(Store<AppState> store, action, NextDispatcher next) {
+  navigatorKey.currentState.pop();
+  next(action);
+}
+
+_openEditTaskPage(Store<AppState> store, action, NextDispatcher next) {
+  navigatorKey.currentState.pushNamed(AppRoutes.editTaskRoute, arguments: action.taskUpdated);
+  next(action);
 }
 
 _openAddTaskPage(Store<AppState> store, action, NextDispatcher next) {

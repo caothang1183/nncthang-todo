@@ -14,6 +14,15 @@ final taskReducer = combineReducers<TaskState>([
   TypedReducer<TaskState, UpdateTaskStatusSuccessAction>(_updateTaskStatusSuccess),
   TypedReducer<TaskState, UpdateTaskStatusFailureAction>(_updateTaskStatusFailure),
 
+  TypedReducer<TaskState, AddingTaskAction>(_addingTask),
+  TypedReducer<TaskState, AddTaskSuccessAction>(_addTaskSuccess),
+  TypedReducer<TaskState, AddTaskFailureAction>(_addTaskFailure),
+
+  TypedReducer<TaskState, EditingTaskAction>(_editingTask),
+  TypedReducer<TaskState, EditTaskSuccessAction>(_editTaskSuccess),
+  TypedReducer<TaskState, EditTaskFailureAction>(_editTaskFailure),
+
+
   TypedReducer<TaskState, DeleteTaskSuccessAction>(_deleteTaskSuccess),
   TypedReducer<TaskState, DeleteTaskFailureAction>(_deleteTaskFailure),
 
@@ -36,18 +45,61 @@ TaskState _loadTasksFailure(TaskState state, LoadTasksFailureAction action) {
   return state.copyWith(isLoading: false, error: action.error);
 }
 
-TaskState _updateTaskStatus(TaskState state, UpdateTaskStatusAction action) {
+TaskState _addingTask(TaskState state, AddingTaskAction action) {
+  return state.copyWith(updating: true);
+}
+
+TaskState _addTaskSuccess(TaskState state, AddTaskSuccessAction action) {
+  var list = state.taskResponse.tasks;
+  list.add(action.task);
+  return state.copyWith(
+    updating: false,
+    taskResponse: state.taskResponse.copyWith(
+      tasks: list,
+    ),
+    lastUpdated: DateTime.now(),
+  );
+}
+
+TaskState _addTaskFailure(TaskState state, AddTaskFailureAction action) {
+  return state.copyWith(updating: false, error: action.error);
+}
+
+TaskState _editingTask(TaskState state, EditingTaskAction action) {
+  return state.copyWith(updating: true);
+}
+
+TaskState _editTaskSuccess(TaskState state, EditTaskSuccessAction action) {
+  var list = state.taskResponse.tasks;
+  List<Task> updatedTasks = list.map((Task task) {
+    if (task.id == action.task.id) {
+      return action.task;
+    }
+    return task;
+  }).toList();
 
   return state.copyWith(
+    taskResponse: state.taskResponse.copyWith(
+      tasks: updatedTasks,
+    ),
+    lastUpdated: DateTime.now(),
+    updating: false,
+  );
+}
 
+TaskState _editTaskFailure(TaskState state, EditTaskFailureAction action) {
+  return state.copyWith(updating: false, error: action.error);
+}
+
+TaskState _updateTaskStatus(TaskState state, UpdateTaskStatusAction action) {
+  return state.copyWith(
     statusCode: null,
-
   );
 }
 
 TaskState _updatingTaskStatus(TaskState state, UpdatingTaskStatusAction action) {
   return state.copyWith(
-      updating: true,
+    updating: true,
   );
 }
 

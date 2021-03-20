@@ -14,7 +14,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case AppRoutes.addTaskRoute:
       return MaterialPageRoute(builder: (_) => AddTaskPage());
     case AppRoutes.editTaskRoute:
-      return MaterialPageRoute(builder: (_) => EditTaskPage());
+      return MaterialPageRoute(builder: (_) => EditTaskPage(taskUpdated: settings.arguments));
     default:
       return MaterialPageRoute(
           builder: (_) => Scaffold(

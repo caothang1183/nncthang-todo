@@ -8,8 +8,10 @@ import 'package:redux/redux.dart';
 List<Middleware<AppState>> databaseMiddleware() {
   return [
     TypedMiddleware<AppState, LoadTasksSuccessAction>(_storeTaskData()),
-    TypedMiddleware<AppState, UpdateTaskStatusSuccessAction>(_updateTaskData()),
+    TypedMiddleware<AppState, UpdateTaskStatusSuccessAction>(_updateTaskStatusData()),
     TypedMiddleware<AppState, DeleteTaskSuccessAction>(_deleteTaskData()),
+    TypedMiddleware<AppState, AddTaskSuccessAction>(_addTaskData()),
+    TypedMiddleware<AppState, EditTaskSuccessAction>(_editTaskData()),
     TypedMiddleware<AppState, LogoutAccountAction>(_logout()),
   ];
 }
@@ -21,7 +23,21 @@ Middleware<AppState> _storeTaskData() {
   };
 }
 
-Middleware<AppState> _updateTaskData() {
+Middleware<AppState> _addTaskData() {
+  return (Store<AppState> store, action, NextDispatcher next) {
+    Future.delayed(Duration(seconds: 5)).then((_) => addTaskData(action.task));
+    next(action);
+  };
+}
+
+Middleware<AppState> _editTaskData() {
+  return (Store<AppState> store, action, NextDispatcher next) {
+    updateTask(action.task);
+    next(action);
+  };
+}
+
+Middleware<AppState> _updateTaskStatusData() {
   return (Store<AppState> store, action, NextDispatcher next) {
     updateTaskStatus(action.taskUpdated);
     next(action);

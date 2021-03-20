@@ -104,8 +104,9 @@ class DeleteTaskFailureAction {
 }
 
 class AddTaskAction {
+  final Task task;
 
-  // AddTaskAction({});
+  AddTaskAction({this.task});
 
   String toString() {
     return 'AddTaskAction{}';
@@ -136,6 +137,43 @@ class AddTaskFailureAction {
 
   String toString() {
     return 'AddTaskFailureAction{error: ${this.error}}';
+  }
+}
+
+class EditTaskAction {
+  final Task task;
+
+  EditTaskAction({this.task});
+
+  String toString() {
+    return 'EditTaskAction{}';
+  }
+}
+
+class EditingTaskAction {
+
+  String toString() {
+    return 'EditingTaskAction{}';
+  }
+}
+
+class EditTaskSuccessAction {
+  final Task task;
+
+  EditTaskSuccessAction({this.task});
+
+  String toString() {
+    return 'EditTaskSuccessAction{}';
+  }
+}
+
+class EditTaskFailureAction {
+  final String error;
+
+  EditTaskFailureAction({@required this.error});
+
+  String toString() {
+    return 'EditTaskFailureAction{error: ${this.error}}';
   }
 }
 

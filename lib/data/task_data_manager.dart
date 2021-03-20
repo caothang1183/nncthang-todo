@@ -27,6 +27,31 @@ TasksData getNewestTaskData(){
   return data;
 }
 
+TasksData addTaskData(Task newTask) {
+  TasksData data = getNewestTaskData();
+  var list = data.taskResponse.tasks;
+  list.add(newTask);
+  TaskResponse newData = TaskResponse(tasks: list);
+  data.taskResponse = newData;
+  data.save();
+  return data;
+}
+
+TasksData updateTask(Task taskUpdated) {
+  TasksData data = getNewestTaskData();
+  var list = data.taskResponse.tasks;
+  List<Task> updatedTasks = list.map((Task task) {
+    if (task.id == taskUpdated.id) {
+      return taskUpdated;
+    }
+    return task;
+  }).toList();
+  TaskResponse newData = TaskResponse(tasks: updatedTasks);
+  data.taskResponse = newData;
+  data.save();
+  return data;
+}
+
 TasksData updateTaskStatus(Task taskUpdated) {
   TasksData data = getNewestTaskData();
   var list = data.taskResponse.tasks;

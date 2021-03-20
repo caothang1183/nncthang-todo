@@ -33,7 +33,7 @@ class LargeRaiseButtonWidget extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              loading ? CustomProgressIndicator(message: "", indicatorColor: Colors.white) : SizedBox.shrink(),
+              loading ? CustomProgressIndicator(message: "", indicatorColor: AppColors.darkGrey) : SizedBox.shrink(),
               Text(
                 label,
                 style: TextStyle(

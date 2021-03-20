@@ -28,12 +28,12 @@ class Task {
   final String createdDate;
 
   Task({
-    this.id = "",
+    this.id,
     this.task = "",
     this.note = "",
     this.complete = false,
     this.deadline = "",
-    this.createdDate = "",
+    this.createdDate,
   });
 
   Task copyWith({

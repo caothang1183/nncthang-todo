@@ -4,6 +4,8 @@ import 'package:nncthang_todoapp/common/constants/colors.dart';
 import 'package:nncthang_todoapp/common/constants/dimens.dart';
 import 'package:nncthang_todoapp/common/entities/task.dart';
 import 'package:nncthang_todoapp/common/utils/datetime_utils.dart';
+import 'package:nncthang_todoapp/presentation/widgets/custom_alert_dialog.dart';
+import 'package:nncthang_todoapp/redux/actions/route_actions.dart';
 import 'package:nncthang_todoapp/redux/actions/task_actions.dart';
 import 'package:nncthang_todoapp/redux/selectors/app_state_selector.dart';
 
@@ -83,14 +85,31 @@ class TaskItem extends StatelessWidget {
             children: [
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 10),
-                child: GestureDetector(child: Icon(Icons.edit), onTap: () {}),
+                child: GestureDetector(
+                    child: Icon(Icons.edit),
+                    onTap: () {
+                      storeSelector(context).dispatch(OpenEditTaskPageAction(taskUpdated: task));
+                    }),
               ),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 child: GestureDetector(
                     child: Icon(Icons.delete),
-                    onTap: () {
-                      storeSelector(context).dispatch(DeleteTaskAction(taskId: task.id));
+                    onTap: () async {
+                      return await showDialog(
+                        context: context,
+                        builder: (context) => CustomAlertDialog(
+                          title: "Delete Task",
+                          message: "Are you sure?\ntaskId:${task.id}",
+                          onNegative: () {
+                            storeSelector(context).dispatch(PopPageAction());
+                          },
+                          onPositive: () {
+                            storeSelector(context).dispatch(DeleteTaskAction(taskId: task.id));
+                            storeSelector(context).dispatch(PopPageAction());
+                          },
+                        ),
+                      );
                     }),
               ),
             ],
