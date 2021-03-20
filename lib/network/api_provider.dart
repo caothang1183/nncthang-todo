@@ -22,4 +22,8 @@ class ApiProvider {
   updateTasks<T>(String id) {
     return DioManager.dio.post('${host()}/tasks/updateStatus/$id').then((resp) => resp as T);
   }
+
+  deleteTask<T>(String id) {
+    return DioManager.dio.get('${host()}/tasks/del/$id').then((resp) => resp as T);
+  }
 }

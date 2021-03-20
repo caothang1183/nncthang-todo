@@ -41,3 +41,18 @@ TasksData updateTaskStatus(Task taskUpdated) {
   data.save();
   return data;
 }
+
+TasksData deleteTaskStatus(String id) {
+  TasksData data = getNewestTaskData();
+  var list = data.taskResponse.tasks;
+  List<Task> updatedTasks = [];
+  list.forEach((Task task) {
+    if (task.id != id) {
+      updatedTasks.add(task);
+    }
+  });
+  TaskResponse newData = TaskResponse(tasks: updatedTasks);
+  data.taskResponse = newData;
+  data.save();
+  return data;
+}

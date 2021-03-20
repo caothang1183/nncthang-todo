@@ -19,6 +19,7 @@ List<Middleware<AppState>> taskMiddleware([
   return [
     TypedMiddleware<AppState, LoadTasksAction>(_loadTasks(repository)),
     TypedMiddleware<AppState, UpdateTaskStatusAction>(_updateTaskStatus(repository)),
+    TypedMiddleware<AppState, DeleteTaskAction>(_deleteTask(repository)),
     TypedMiddleware<AppState, LogoutAccountAction>(_logout()),
   ];
 }
@@ -49,6 +50,20 @@ Middleware<AppState> _updateTaskStatus(TaskRepository repository) {
       int statusCode = response.statusCode;
       store.dispatch(UpdateTaskStatusSuccessAction(taskUpdated: taskUpdated, statusCode: statusCode));
     }).catchError((e) => store.dispatch(UpdateTaskStatusFailureAction(error: e.toString())));
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _deleteTask(TaskRepository repository) {
+  return (Store<AppState> store, action, NextDispatcher next) {
+    repository.deleteTask<Response>(action.taskId).then((response) {
+      if(response.statusCode == 200){
+        store.dispatch(DeleteTaskSuccessAction(id: action.taskId));
+      } else {
+        store.dispatch(DeleteTaskFailureAction(error: "Something went wrong!"));
+      }
+    }).catchError((e) => store.dispatch(DeleteTaskFailureAction(error: e.toString())));
 
     next(action);
   };

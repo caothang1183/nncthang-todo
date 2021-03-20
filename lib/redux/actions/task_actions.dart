@@ -73,6 +73,71 @@ class UpdateTaskStatusFailureAction {
   }
 }
 
+class DeleteTaskAction {
+  final String taskId;
+
+  DeleteTaskAction({this.taskId});
+
+  String toString() {
+    return 'DeleteTaskAction{taskId: $taskId}';
+  }
+}
+
+class DeleteTaskSuccessAction {
+  final String id;
+
+  DeleteTaskSuccessAction({this.id});
+
+  String toString() {
+    return 'DeleteTaskSuccessAction{}';
+  }
+}
+
+class DeleteTaskFailureAction {
+  final String error;
+
+  DeleteTaskFailureAction({@required this.error});
+
+  String toString() {
+    return 'DeleteTaskFailureAction{error: ${this.error}}';
+  }
+}
+
+class AddTaskAction {
+
+  // AddTaskAction({});
+
+  String toString() {
+    return 'AddTaskAction{}';
+  }
+}
+
+class AddingTaskAction {
+
+  String toString() {
+    return 'AddingTaskAction{}';
+  }
+}
+
+class AddTaskSuccessAction {
+  final Task task;
+
+  AddTaskSuccessAction({this.task});
+
+  String toString() {
+    return 'AddTaskSuccessAction{}';
+  }
+}
+
+class AddTaskFailureAction {
+  final String error;
+
+  AddTaskFailureAction({@required this.error});
+
+  String toString() {
+    return 'AddTaskFailureAction{error: ${this.error}}';
+  }
+}
 
 
 

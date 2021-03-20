@@ -14,6 +14,9 @@ final taskReducer = combineReducers<TaskState>([
   TypedReducer<TaskState, UpdateTaskStatusSuccessAction>(_updateTaskStatusSuccess),
   TypedReducer<TaskState, UpdateTaskStatusFailureAction>(_updateTaskStatusFailure),
 
+  TypedReducer<TaskState, DeleteTaskSuccessAction>(_deleteTaskSuccess),
+  TypedReducer<TaskState, DeleteTaskFailureAction>(_deleteTaskFailure),
+
   TypedReducer<TaskState, LogoutAccountAction>(_logout),
 ]);
 
@@ -71,6 +74,27 @@ TaskState _updateTaskStatusFailure(TaskState state, UpdateTaskStatusFailureActio
   return state.copyWith(
     updating: false,
     isLoading: false,
+    error: action.error,
+  );
+}
+
+TaskState _deleteTaskSuccess(TaskState state, DeleteTaskSuccessAction action) {
+  var list = state.taskResponse.tasks;
+  List<Task> updatedTasks = [];
+  list.forEach((Task task) {
+    if (task.id != action.id) {
+      updatedTasks.add(task);
+    }
+  });
+  return state.copyWith(
+    taskResponse: state.taskResponse.copyWith(
+      tasks: updatedTasks,
+    ),
+  );
+}
+
+TaskState _deleteTaskFailure(TaskState state, DeleteTaskFailureAction action) {
+  return state.copyWith(
     error: action.error,
   );
 }

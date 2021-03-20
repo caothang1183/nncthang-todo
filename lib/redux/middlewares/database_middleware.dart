@@ -9,6 +9,7 @@ List<Middleware<AppState>> databaseMiddleware() {
   return [
     TypedMiddleware<AppState, LoadTasksSuccessAction>(_storeTaskData()),
     TypedMiddleware<AppState, UpdateTaskStatusSuccessAction>(_updateTaskData()),
+    TypedMiddleware<AppState, DeleteTaskSuccessAction>(_deleteTaskData()),
     TypedMiddleware<AppState, LogoutAccountAction>(_logout()),
   ];
 }
@@ -23,6 +24,13 @@ Middleware<AppState> _storeTaskData() {
 Middleware<AppState> _updateTaskData() {
   return (Store<AppState> store, action, NextDispatcher next) {
     updateTaskStatus(action.taskUpdated);
+    next(action);
+  };
+}
+
+Middleware<AppState> _deleteTaskData() {
+  return (Store<AppState> store, action, NextDispatcher next) {
+    deleteTaskStatus(action.id);
     next(action);
   };
 }

@@ -87,7 +87,11 @@ class TaskItem extends StatelessWidget {
               ),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 10),
-                child: GestureDetector(child: Icon(Icons.delete), onTap: () {}),
+                child: GestureDetector(
+                    child: Icon(Icons.delete),
+                    onTap: () {
+                      storeSelector(context).dispatch(DeleteTaskAction(taskId: task.id));
+                    }),
               ),
             ],
           ),
