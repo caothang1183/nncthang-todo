@@ -1,10 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:nncthang_todoapp/common/entities/task.dart';
 import 'package:nncthang_todoapp/common/entities/task_response.dart';
-import 'package:nncthang_todoapp/network/models/auth_criteria.dart';
 import 'package:nncthang_todoapp/network/task_repository.dart';
-import 'package:nncthang_todoapp/redux/actions/authentication_actions.dart';
 import 'package:nncthang_todoapp/redux/actions/task_actions.dart';
 import 'package:nncthang_todoapp/redux/states/app_state.dart';
 import 'package:redux/redux.dart';

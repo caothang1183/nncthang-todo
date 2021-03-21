@@ -1,29 +1,16 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility that Flutter provides. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:nncthang_todoapp/app.dart';
-
+import './presentation/widgets/bottom_navigator_test.dart' as bottom_navigator_test;
+import './presentation/widgets/complete_check_box_test.dart' as complete_check_box_test;
+import './presentation/pages/home/fragments/widgets/task_item_test.dart' as task_item_test;
+import './presentation/pages/home/fragments/widgets/task_list_test.dart' as task_list_test;
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(App());
+  group("Common Widgets test", () {
+    bottom_navigator_test.main();
+    complete_check_box_test.main();
+  });
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
-
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+  group("Home Widgets test", () {
+    task_item_test.main();
+    task_list_test.main();
   });
 }

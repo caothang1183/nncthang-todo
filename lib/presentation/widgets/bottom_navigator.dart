@@ -14,6 +14,7 @@ class BottomTabBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
+      key: ValueKey("todo_bottom_navigation_bar"),
       items: _buildBottomItems(),
       currentIndex: currentIndex,
       selectedItemColor: Colors.orange,

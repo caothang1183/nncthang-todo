@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import './common/utils/datetime_utils_test.dart' as datetime_utils_test;
+import 'common/utils/datetime_utils_test.dart' as datetime_utils_test;
 import './redux/middlewares/all_middlewares_test.dart' as all_middlewares_test;
 import './redux/reducers/all_reducers_test.dart' as all_reducers_test;
 import './redux/selectors/all_state_selectors_test.dart' as all_state_selectors_test;

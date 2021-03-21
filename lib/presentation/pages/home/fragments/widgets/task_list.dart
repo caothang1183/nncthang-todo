@@ -14,6 +14,7 @@ class TaskList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      key: ValueKey("task_list"),
       itemBuilder: (context, index) => TaskItem(
         task: tasks[index],
       ),

@@ -98,7 +98,6 @@ Middleware<AppState> _updateTaskStatus(TaskRepository repository) {
     store.dispatch(UpdatingTaskStatusAction());
     repository.updateTaskStatus<Response>(action.taskId).then((response) {
       Task taskUpdated = Task.fromJson(response.data['data']);
-      int statusCode = response.statusCode;
       store.dispatch(UpdateTaskStatusSuccessAction(taskUpdated: taskUpdated));
     }).catchError((e) => store.dispatch(UpdateTaskStatusFailureAction(error: e.toString())));
 

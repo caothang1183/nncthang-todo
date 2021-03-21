@@ -20,6 +20,7 @@ class TaskItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      key: ValueKey("task_item"),
       padding: EdgeInsets.symmetric(vertical: 12.0),
       decoration: BoxDecoration(
         border: Border(
@@ -45,6 +46,7 @@ class TaskItem extends StatelessWidget {
               children: [
                 Text(
                   task.task,
+                  key: ValueKey("txt_task"),
                   style: TextStyle(
                     fontSize: Dimens.mediumFontSize,
                     color: AppColors.darkGrey,
@@ -53,6 +55,7 @@ class TaskItem extends StatelessWidget {
                 SizedBox(height: 5.0),
                 Text(
                   task.note,
+                  key: ValueKey("txt_task_note"),
                   style: TextStyle(
                     fontSize: Dimens.mediumFontSize,
                     color: AppColors.greyNavigator,
@@ -65,6 +68,7 @@ class TaskItem extends StatelessWidget {
             children: [
               Text(
                 DateTimeUtils.formatDateTime(task.deadline, DateFormat.ABBR_WEEKDAY),
+                key: ValueKey("txt_task_deadline"),
                 style: TextStyle(
                   fontSize: Dimens.mediumFontSize,
                   color: AppColors.darkGrey.withOpacity(0.6),
@@ -72,6 +76,7 @@ class TaskItem extends StatelessWidget {
               ),
               Text(
                 DateTimeUtils.formatDateTime(task.deadline, DateFormat.HOUR24_MINUTE),
+                key: ValueKey("txt_task_deadline_time"),
                 style: TextStyle(
                   fontSize: Dimens.mediumFontSize,
                   color: AppColors.greyNavigator,
