@@ -23,7 +23,7 @@ AuthState _signingInSuccessAccount(AuthState state, SignInAccountSuccessAction a
 }
 
 AuthState _signingInFailureAccount(AuthState state, SignInAccountFailureAction action) {
-  return state.copyWith(signingIn: false, error: action.error);
+  return state.copyWith(signingIn: false, error: action.error, accessToken: "");
 }
 
 AuthState _logout(AuthState state, LogoutAccountAction action) {

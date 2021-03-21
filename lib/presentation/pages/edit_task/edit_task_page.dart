@@ -8,7 +8,7 @@ import 'package:nncthang_todoapp/presentation/widgets/deadline_picker.dart';
 import 'package:nncthang_todoapp/presentation/widgets/large_raise_button.dart';
 import 'package:nncthang_todoapp/presentation/widgets/text_form_field.dart';
 import 'package:nncthang_todoapp/redux/actions/task_actions.dart';
-import 'package:nncthang_todoapp/redux/selectors/task_selectors.dart';
+import 'package:nncthang_todoapp/redux/selectors/task_state_selectors.dart';
 import 'package:nncthang_todoapp/redux/states/app_state.dart';
 import 'package:redux/redux.dart';
 

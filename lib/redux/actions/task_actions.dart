@@ -54,12 +54,11 @@ class UpdatingTaskStatusAction {
 
 class UpdateTaskStatusSuccessAction {
   final Task taskUpdated;
-  final int statusCode;
 
-  UpdateTaskStatusSuccessAction({@required this.taskUpdated, @required this.statusCode});
+  UpdateTaskStatusSuccessAction({@required this.taskUpdated});
 
   String toString() {
-    return 'UpdateTaskStatusSuccessAction{statusCode: ${this.statusCode}}';
+    return 'UpdateTaskStatusSuccessAction{}';
   }
 }
 

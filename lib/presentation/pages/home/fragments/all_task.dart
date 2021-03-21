@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:nncthang_todoapp/common/entities/task.dart';
 import 'package:nncthang_todoapp/presentation/pages/home/fragments/widgets/task_data_container.dart';
-import 'package:nncthang_todoapp/redux/selectors/task_selectors.dart';
+import 'package:nncthang_todoapp/redux/selectors/task_state_selectors.dart';
 import 'package:nncthang_todoapp/redux/states/app_state.dart';
 import 'package:redux/redux.dart';
 

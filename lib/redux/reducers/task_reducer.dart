@@ -116,7 +116,6 @@ TaskState _updateTaskStatusSuccess(TaskState state, UpdateTaskStatusSuccessActio
     taskResponse: state.taskResponse.copyWith(
       tasks: updatedTasks,
     ),
-    statusCode: action.statusCode,
     lastUpdated: DateTime.now(),
     updating: false,
   );
@@ -125,7 +124,6 @@ TaskState _updateTaskStatusSuccess(TaskState state, UpdateTaskStatusSuccessActio
 TaskState _updateTaskStatusFailure(TaskState state, UpdateTaskStatusFailureAction action) {
   return state.copyWith(
     updating: false,
-    isLoading: false,
     error: action.error,
   );
 }

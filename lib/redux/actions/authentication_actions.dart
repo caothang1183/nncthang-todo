@@ -21,7 +21,7 @@ class SigningInAccountAction {
 class SignInAccountSuccessAction {
   final String accessToken;
 
-  SignInAccountSuccessAction({this.accessToken = ""});
+  SignInAccountSuccessAction({this.accessToken});
 
   String toString() {
     return 'SignInAccountSuccessAction{}';

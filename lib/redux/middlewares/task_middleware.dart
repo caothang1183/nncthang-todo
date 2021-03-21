@@ -10,7 +10,7 @@ import 'package:nncthang_todoapp/network/task_repository.dart';
 import 'package:nncthang_todoapp/redux/actions/authentication_actions.dart';
 import 'package:nncthang_todoapp/redux/actions/route_actions.dart';
 import 'package:nncthang_todoapp/redux/actions/task_actions.dart';
-import 'package:nncthang_todoapp/redux/selectors/task_selectors.dart';
+import 'package:nncthang_todoapp/redux/selectors/task_state_selectors.dart';
 import 'package:nncthang_todoapp/redux/states/app_state.dart';
 import 'package:redux/redux.dart';
 
@@ -99,7 +99,7 @@ Middleware<AppState> _updateTaskStatus(TaskRepository repository) {
     repository.updateTaskStatus<Response>(action.taskId).then((response) {
       Task taskUpdated = Task.fromJson(response.data['data']);
       int statusCode = response.statusCode;
-      store.dispatch(UpdateTaskStatusSuccessAction(taskUpdated: taskUpdated, statusCode: statusCode));
+      store.dispatch(UpdateTaskStatusSuccessAction(taskUpdated: taskUpdated));
     }).catchError((e) => store.dispatch(UpdateTaskStatusFailureAction(error: e.toString())));
 
     next(action);

@@ -1,5 +1,6 @@
 import 'package:nncthang_todoapp/common/entities/task.dart';
 import 'package:nncthang_todoapp/redux/states/app_state.dart';
+import 'package:nncthang_todoapp/redux/states/task_state.dart';
 
 List<Task> allTaskSelector(AppState state) {
   List<Task> list = state.taskState.taskResponse.tasks.toList();
@@ -19,6 +20,8 @@ List<Task> tasksIncompleteSelector(AppState state) {
   return list;
 }
 
+TaskState taskStateSelector(AppState state) => state.taskState;
+
 bool isLoadingTaskSelector(AppState state) => state.taskState.isLoading;
 
 bool updatingTaskSelector(AppState state) => state.taskState.updating;
@@ -28,4 +31,3 @@ String taskErrorMessageSelector(AppState state) => state.taskState.error;
 DateTime taskLastUpdatedSelector(AppState state) => state.taskState.lastUpdated;
 
 int statusCodeSelector(AppState state) => state.taskState.statusCode;
-
